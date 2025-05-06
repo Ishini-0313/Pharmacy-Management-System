@@ -23,6 +23,7 @@ public class Medicine extends javax.swing.JFrame {
     public Medicine() {
         initComponents();
         SelectMed();
+        getCompnay();
     }
     
     Connection con = null;
@@ -154,8 +155,6 @@ public class Medicine extends javax.swing.JFrame {
                 MedQtyActionPerformed(evt);
             }
         });
-
-        Comp.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         AddBtn.setBackground(new java.awt.Color(51, 204, 0));
         AddBtn.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -415,6 +414,23 @@ public class Medicine extends javax.swing.JFrame {
             Logger.getLogger(Medicine.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    
+    public void getCompnay(){
+        try {
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/Pharmacydb","Ishini","0313");
+            st = con.createStatement();
+            String x = "SELECT * FROM COMPANY";
+            rs = st.executeQuery(x);
+            while(rs.next()){
+                String MyComp = rs.getString("COMNAME");
+                Comp.addItem(MyComp);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Medicine.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     private void AddBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddBtnMouseClicked
         Fdate =  FabDate.getDate();
